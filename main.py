@@ -393,6 +393,13 @@ def validate(val_loader, model, criterion):
     top1 = AverageMeter()
     top5 = AverageMeter()
 
+    #Minha mod
+    import numpy as np
+    preds = np.asarray([])
+    targets = np.asarray([])
+    logits_pred = []
+    names = []
+
     # switch to evaluate mode
     model.eval()
 
@@ -412,6 +419,13 @@ def validate(val_loader, model, criterion):
             losses.update(loss.item(), input.size(0))
             top1.update(prec1[0], input.size(0))
             top5.update(prec5[0], input.size(0))
+	
+	    #Minha mod
+            _, predicted = torch.max(output.data, 1)
+            preds = np.concatenate((preds,predicted.cpu().numpy().ravel()))
+            targets = np.concatenate((targets,target.cpu().numpy().ravel()))
+            logits_pred.append(output.data.cpu().numpy())
+            names.append(z)
 
             # measure elapsed time
             batch_time.update(time.time() - end)
@@ -426,7 +440,37 @@ def validate(val_loader, model, criterion):
                        i, len(val_loader), batch_time=batch_time, loss=losses,
                        top1=top1, top5=top5))
 
-        print(' * Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'
+        #Minha mod
+        from sklearn.metrics import classification_report
+        from sklearn.metrics import accuracy_score
+        acc = accuracy_score(targets, preds)
+        print(acc)
+        cr = classification_report(targets, preds,output_dict= True)
+        a1,a2,a3 = cr['macro avg']['f1-score'] ,cr['macro avg']['precision'],cr['macro avg']['recall'] 
+        topover = (a1+a2+a3)/3 
+        print(classification_report(targets, preds))
+        from sklearn.metrics import balanced_accuracy_score
+        from sklearn.metrics import accuracy_score
+        print(balanced_accuracy_score(targets, preds))
+
+        log_score = open("log_score.txt","a")
+        log_score.write('logits: '+str(logits_pred) + "\n")
+        log_score.write('names: '+str(names) + "\n")
+        log_score.write('accuracy:'+str(acc)+'\n')
+        log_score.write('report: '+str(cr)+'\n')
+        log_score.close()
+        
+        statsDict = pickle.load(open('statsDict.p','rb'))
+        statsDict['type'].append(valtype)
+        statsDict['logits'].append(logits_pred)
+        statsDict['names'].append(names)
+        statsDict['acc'].append(acc)
+        statsDict['report'].append(str(cr))
+        pickle.dump(statsDict,open('statsDict.p','wb'))
+        print("SAVED!!")
+	
+	
+	print(' * Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'
               .format(top1=top1, top5=top5))
 
     return losses.avg, top1.avg, top5.avg
