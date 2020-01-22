@@ -30,6 +30,8 @@ import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
 
+import pickle
+
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
@@ -107,8 +109,16 @@ class stats:
            self.valTop1 = []
            self.valTop5 = []
 
-    
+
 def main():
+    statsDict = {}
+    statsDict['type']=[]
+    statsDict['logits'] =[]
+    statsDict['names']=[]
+    statsDict['acc']=[]
+    statsDict['report']=[]
+    pickle.dump(statsDict,open('statsDict.p','wb'))
+    
     global args, best_prec1
     args = parser.parse_args()
 
@@ -214,15 +224,15 @@ def main():
     # Data loading code
     traindir = os.path.join(args.data, 'train')
     valdir = os.path.join(args.data, 'val')
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225]) 
+    #normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+    #                                 std=[0.229, 0.224, 0.225]) 
+    
 
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            #transforms.RandomResizedCrop(224),
+            transforms.RandomResizedCrop(224),
             #transforms.RandomHorizontalFlip(),
-            transforms.Resize(224),
 	    transforms.ToTensor(),
             normalize,
         ]))
