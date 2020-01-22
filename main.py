@@ -222,7 +222,7 @@ def main():
         transforms.Compose([
             #transforms.RandomResizedCrop(224),
             #transforms.RandomHorizontalFlip(),
-            transforms.Resize(256),
+            transforms.Resize(64),
 	    transforms.ToTensor(),
             normalize,
         ]))
