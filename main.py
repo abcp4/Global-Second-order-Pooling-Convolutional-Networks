@@ -200,7 +200,7 @@ def main():
         model = models.__dict__[args.arch](att_position = args.attpos,att_dim = args.attdim,
                                            GSoP_mode = args.GSoP_mode)
 
-    print_graph = False
+    print_graph = True
     if print_graph: #print arch to graph.pdf
        vizNet(model, args.modeldir) 
     if args.gpu is not None:
