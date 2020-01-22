@@ -200,7 +200,7 @@ def main():
         model = models.__dict__[args.arch](att_position = args.attpos,att_dim = args.attdim,
                                            GSoP_mode = args.GSoP_mode)
 
-    print_graph = True
+    print_graph = False
     if print_graph: #print arch to graph.pdf
        vizNet(model, args.modeldir) 
     if args.gpu is not None:
@@ -249,8 +249,8 @@ def main():
         traindir,
         transforms.Compose([
             transforms.RandomResizedCrop(224),
-            #transforms.RandomHorizontalFlip(),
-	    transforms.ToTensor(),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
             normalize,
         ]))
 
@@ -264,6 +264,7 @@ def main():
         num_workers=args.workers, pin_memory=True, sampler=train_sampler)
 	
     evaluate_transforms = transforms.Compose([
+            transforms.Resize(256),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
             normalize,
