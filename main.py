@@ -220,9 +220,9 @@ def main():
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([
-            #transforms.RandomResizedCrop(224),
+            transforms.RandomResizedCrop(224),
             #transforms.RandomHorizontalFlip(),
-            transforms.Resize(64),
+            #transforms.Resize(64),
 	    transforms.ToTensor(),
             normalize,
         ]))
