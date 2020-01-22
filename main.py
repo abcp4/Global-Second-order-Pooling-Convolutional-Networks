@@ -468,10 +468,7 @@ def validate(val_loader, model, criterion):
         statsDict['report'].append(str(cr))
         pickle.dump(statsDict,open('statsDict.p','wb'))
         print("SAVED!!")
-	
-	
-	print(' * Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'
-              .format(top1=top1, top5=top5))
+	print(' * Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f}'.format(top1=top1, top5=top5))
 
     return losses.avg, top1.avg, top5.avg
 
