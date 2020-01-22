@@ -490,7 +490,7 @@ def validate(val_loader, model, criterion):
         log_score.close()
         
         statsDict = pickle.load(open('statsDict.p','rb'))
-        statsDict['type'].append(valtype)
+        statsDict['type'].append(0)
         statsDict['logits'].append(logits_pred)
         statsDict['names'].append(names)
         statsDict['acc'].append(acc)
