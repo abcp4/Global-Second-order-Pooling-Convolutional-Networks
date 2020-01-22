@@ -434,7 +434,7 @@ def validate(val_loader, model, criterion):
 
     with torch.no_grad():
         end = time.time()
-        for i, (input, target) in enumerate(val_loader):
+        for i, (input, target, name) in enumerate(val_loader):
             if args.gpu is not None:
                 input = input.cuda(args.gpu, non_blocking=True)
             target = target.cuda(args.gpu, non_blocking=True)
@@ -454,7 +454,7 @@ def validate(val_loader, model, criterion):
             preds = np.concatenate((preds,predicted.cpu().numpy().ravel()))
             targets = np.concatenate((targets,target.cpu().numpy().ravel()))
             logits_pred.append(output.data.cpu().numpy())
-            names.append(z)
+            names.append(name)
 
             # measure elapsed time
             batch_time.update(time.time() - end)
