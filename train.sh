@@ -2,7 +2,7 @@ set -e
 arch=resnet50 #resnet101
 GSoP_mode=1 #2
 att_manner=channel #{channel, position, fusion_avg, fusion_max, fusion_concat}
-batchsize=384
+batchsize=64
 attdim=128
 modeldir=checkpoints/ImageNet1k-$arch-GSoP$GSoP_mode-${att_manner}
 dataset=/content/data/
