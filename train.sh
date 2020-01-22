@@ -5,7 +5,7 @@ att_manner=channel #{channel, position, fusion_avg, fusion_max, fusion_concat}
 batchsize=384
 attdim=128
 modeldir=checkpoints/ImageNet1k-$arch-GSoP$GSoP_mode-${att_manner}
-dataset=/put/your/dataset/path/here
+dataset=/content/data/
 
 
 if [ ! -e $modeldir/*.pth.tar ]; then
