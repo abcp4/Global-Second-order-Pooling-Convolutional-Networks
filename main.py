@@ -316,15 +316,15 @@ def main():
         is_best = prec1 > best_prec1
         best_prec1 = max(prec1, best_prec1)
         filename = os.path.join(args.modeldir, 'net-epoch-%s.pth.tar' % (epoch + 1))
-        save_checkpoint({
-            'epoch': epoch + 1,
-            'arch': args.arch,
-            'state_dict': model.state_dict(),
-            'best_prec1': best_prec1,
-            'optimizer' : optimizer.state_dict(),
-        }, is_best, filename)
-        plot_cruve(stats_, args.modeldir, True)
-        data = stats_
+        #save_checkpoint({
+        #    'epoch': epoch + 1,
+        #    'arch': args.arch,
+        #    'state_dict': model.state_dict(),
+        #    'best_prec1': best_prec1,
+        #    'optimizer' : optimizer.state_dict(),
+        #}, is_best, filename)
+        #plot_cruve(stats_, args.modeldir, True)
+        #data = stats_
         #sio.savemat(os.path.join(args.modeldir,'stats.mat'), {'data':data})
         
 
