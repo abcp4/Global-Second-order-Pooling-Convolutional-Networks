@@ -269,14 +269,27 @@ def main():
             transforms.ToTensor(),
             normalize,
         ])
+
+   test_transforms = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            normalize,
+        ])
     val_loader = torch.utils.data.DataLoader(
 	ImageFolderWithPaths(valdir, evaluate_transforms),
         #datasets.ImageFolder(valdir,evaluate_transforms ),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
+	
+    test_loader = torch.utils.data.DataLoader(
+	ImageFolderWithPaths(testdir, test_transforms),
+        batch_size=args.batch_size, shuffle=False,
+        num_workers=args.workers, pin_memory=True)
 
     if args.evaluate:
         validate(val_loader, model, criterion)
+	validate(test_loader, model, criterion)
         return
     # make director for store checkpoint files
     if os.path.exists(args.modeldir) is not True:
