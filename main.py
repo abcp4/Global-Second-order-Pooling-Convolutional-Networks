@@ -271,7 +271,7 @@ def main():
             normalize,
         ])
 
-   test_transforms = transforms.Compose([
+    test_transforms = transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
