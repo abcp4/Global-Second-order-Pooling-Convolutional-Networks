@@ -291,7 +291,7 @@ def main():
     if args.evaluate:
         validate(val_loader, model, criterion)
 	validate(test_loader, model, criterion)
-        return
+	return
     # make director for store checkpoint files
     if os.path.exists(args.modeldir) is not True:
         os.mkdir(args.modeldir)
