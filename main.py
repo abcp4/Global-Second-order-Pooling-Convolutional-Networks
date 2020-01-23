@@ -310,10 +310,8 @@ def main():
         stats_.valObj.append(valObj)
         stats_.valTop1.append(prec1.cpu().numpy())
         stats_.valTop5.append(prec5.cpu().numpy())
-	
-	#my mod
-	validate(test_loader, model, criterion)
-	
+        #my mod
+        validate(test_loader, model, criterion)
         # remember best prec@1 and save checkpoint
         is_best = prec1 > best_prec1
         best_prec1 = max(prec1, best_prec1)
