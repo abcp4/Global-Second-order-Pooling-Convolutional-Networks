@@ -290,7 +290,7 @@ def main():
 
     if args.evaluate:
         validate(val_loader, model, criterion)
-        validate(test_loader, model, criterion)
+        
         return
     # make director for store checkpoint files
     if os.path.exists(args.modeldir) is not True:
@@ -310,6 +310,10 @@ def main():
         stats_.valObj.append(valObj)
         stats_.valTop1.append(prec1.cpu().numpy())
         stats_.valTop5.append(prec5.cpu().numpy())
+	
+	#my mod
+	validate(test_loader, model, criterion)
+	
         # remember best prec@1 and save checkpoint
         is_best = prec1 > best_prec1
         best_prec1 = max(prec1, best_prec1)
