@@ -1,6 +1,6 @@
 set -e
 arch=resnet50 #resnet101
-GSoP_mode=1 #2
+GSoP_mode=2 #2
 att_manner=channel #{channel, position, fusion_avg, fusion_max, fusion_concat}
 batchsize=64
 attdim=128
