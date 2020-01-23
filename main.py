@@ -152,7 +152,7 @@ def main():
        att = '&'
     else :
        assert False, "invalid att_manner"
-		
+
     print("==========attention mode: {}===========". format(args.att_manner))
 
     if args.arch == 'resnet50':
@@ -263,7 +263,7 @@ def main():
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),
         num_workers=args.workers, pin_memory=True, sampler=train_sampler)
-	
+
     evaluate_transforms = transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
@@ -278,20 +278,20 @@ def main():
             normalize,
         ])
     val_loader = torch.utils.data.DataLoader(
-	ImageFolderWithPaths(valdir, evaluate_transforms),
+        ImageFolderWithPaths(valdir, evaluate_transforms),
         #datasets.ImageFolder(valdir,evaluate_transforms ),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
-	
-    test_loader = torch.utils.data.DataLoader(
-	ImageFolderWithPaths(testdir, test_transforms),
+
+    test_loader = torch.utils.data.DataLoader(  
+        ImageFolderWithPaths(testdir, test_transforms),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
 
     if args.evaluate:
         validate(val_loader, model, criterion)
-	validate(test_loader, model, criterion)
-	return
+        validate(test_loader, model, criterion)
+        return
     # make director for store checkpoint files
     if os.path.exists(args.modeldir) is not True:
         os.mkdir(args.modeldir)
